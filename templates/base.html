@@ -1,0 +1,17 @@
+<!Doctype HTML>
+<html>
+<head>
+</head>
+<title>{% block head_title %}PashmaAds{% endblock head_title%}</title>
+<body> 
+
+{% include "snippets/nav.html" %}
+{% include "snippets/css.html" %}
+{% include "snippets/js.html" %}
+<div class='container'>
+{% block content %}
+Hello World
+{% endblock %}
+</div>
+</body>
+</html>

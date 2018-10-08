@@ -1,0 +1,7 @@
+{% extends "home.html" %}
+
+<title>{% block title %}{{ block.super }} || About{% endblock %}</title>
+{% block content %}
+<p>About</p>
+{% include "snippets/sidebar.html" %}
+{% endblock %}
