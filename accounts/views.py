@@ -5,7 +5,7 @@ from django.contrib.auth import (
 							logout)
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
-
+from django.db.models import Q
 from .forms import (
 					UserLoginForm,
 					RegisterForm,
@@ -28,7 +28,10 @@ def login_view(request):
 		user = authenticate(email=email,password=password)
 		if user is None:
 			User = get_user_model()
-			user_queryset = User.objects.all().filter(username__iexact=email)
+			user_queryset = User.objects.all().filter(
+				Q(username__iexact=email) |
+				Q(mobile__iexact=email)
+				)
 			if user_queryset:
 				username = user_queryset[0].email
 				print(username)

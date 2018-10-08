@@ -5,7 +5,7 @@ from .models import User
 
 
 class UserLoginForm(forms.Form):
-    email = forms.CharField(label ="Username or email:")
+    email = forms.CharField(label ="Username or email or Mobile:")
     # username = forms.CharField(max_length=25)
     password = forms.CharField(widget = forms.PasswordInput)
 
@@ -32,11 +32,12 @@ class UserLoginForm(forms.Form):
 class RegisterForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
     username = forms.CharField(max_length=25)
+    mobile = forms.CharField(max_length=10,min_length=10)
     password2 = forms.CharField(label='Confirm password', widget=forms.PasswordInput)
 
     class Meta:
         model = User
-        fields = ('email','username','active', 'admin')
+        fields = ('email','username','mobile','active', 'admin')
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
@@ -44,6 +45,13 @@ class RegisterForm(forms.ModelForm):
         if qs.exists():
             raise forms.ValidationError("email is taken")
         return email
+
+    def clean_mobile(self):
+        mobile = self.cleaned_data.get('mobile')
+        qs = User.objects.filter(mobile=mobile)
+        if qs.exists():
+            raise forms.ValidationError("mobile is taken")
+        return mobile
 
     def clean_username(self):
         # Check that the two password entries match
