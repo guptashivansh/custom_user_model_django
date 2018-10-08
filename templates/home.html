@@ -16,4 +16,7 @@
 {% if user.is_authenticated %}
 <a href="/logout">logout</a>
 {% endif %}
+{% if not user.is_authenticated %}
+<a href="/login">login</a>
+{% endif %}
 {% endblock %}
